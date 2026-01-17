@@ -1,0 +1,96 @@
+[package]
+name = "bitwarden-desktop-autofill"
+version = "0.1.0"
+edition = "2021"
+description = "Desktop autofill for Bitwarden - automatically fills credentials in Windows applications"
+license = "MIT"
+repository = "https://github.com/Klemencina/Bitwarden-desktop-autofill"
+keywords = ["password-manager", "bitwarden", "windows", "autofill", "ui-automation"]
+categories = ["authentication"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full", "sync", "rt-multi-thread"] }
+
+# HTTP client for Bitwarden API
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+
+# Windows UI Automation for detecting focused elements
+uiautomation = "0.7"
+
+# Global hotkey detection
+global-hotkey = "0.6"
+
+# System tray support
+tray-icon = "0.19"
+muda = "0.15"
+
+# Windows APIs (SendInput, etc.)
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_Security_Credentials",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_System_Threading",
+    "Win32_System_Memory",
+    "Win32_System_Com",
+    "Win32_System_Console",
+    "Win32_System_LibraryLoader",
+    "Win32_System_DataExchange",
+    "Win32_System_Ole",
+    "Win32_System_Registry",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_Controls",
+    "Win32_UI_Shell",
+] }
+
+# Security - zeroizing secrets in memory
+secrecy = { version = "0.10", features = ["serde"] }
+zeroize = { version = "1.8", features = ["derive"] }
+
+# Cryptography for Bitwarden vault
+argon2 = "0.5"                    # Password hashing (Argon2id)
+pbkdf2 = { version = "0.12", features = ["hmac"] }  # Legacy password hashing
+sha2 = "0.10"                     # SHA-256 for HKDF
+hkdf = "0.12"                     # Key derivation
+aes-gcm = "0.10"                  # Vault decryption (AES-256-GCM)
+aes = "0.8"                        # AES block cipher
+cbc = "0.1"                        # CBC mode for legacy encryption
+hmac = "0.12"                     # HMAC for key stretching
+rsa = { version = "0.9", features = ["sha2"] }  # RSA for org keys
+base64 = "0.22"                   # Base64 encoding
+
+# Secure credential storage (Windows Credential Manager)
+keyring = { version = "3", features = ["windows-native"] }
+
+# JSON and serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# UUID for Bitwarden item IDs
+uuid = { version = "1", features = ["serde", "v4"] }
+
+# Fuzzy matching for window title to vault entry matching
+fuzzy-matcher = "0.3"
+
+# Error handling
+thiserror = "2"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Environment variables from .env file
+dotenvy = "0.15"
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[target.'cfg(windows)'.build-dependencies]
+winres = "0.1"
