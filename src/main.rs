@@ -1,3 +1,4 @@
+#![windows_subsystem = "windows"]
 //! Bitwarden Desktop Autofill
 //!
 //! A Windows desktop autofill tool that integrates with Bitwarden to automatically

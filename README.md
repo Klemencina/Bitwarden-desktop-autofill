@@ -36,6 +36,25 @@ cargo build --release
 .\target\release\bitwarden-desktop-autofill.exe
 ```
 
+### Windows Installer (Inno Setup)
+
+This project includes an Inno Setup script to build a full installer.
+
+1. Install Inno Setup 6.x: https://jrsoftware.org/isinfo.php
+2. Build the release binary:
+
+```powershell
+cargo build --release
+```
+
+3. Build the installer (run from the repo root):
+
+```powershell
+iscc .\installer\bitwarden-desktop-autofill.iss
+```
+
+The installer will be written to `installer\output\Bitwarden-Desktop-Autofill-Setup.exe`.
+
 ## Usage
 
 1. **Start the app** - It will appear in your system tray

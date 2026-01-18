@@ -1,5 +1,6 @@
 # Rust build artifacts
 /target/
+/installer/output/
 **/*.rs.bk
 
 # IDE / Editor
