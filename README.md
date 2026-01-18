@@ -98,7 +98,37 @@ The installer will be written to `installer\output\Bitwarden-Desktop-Autofill-Se
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## Security
+## How Your Passwords Stay Safe
+
+**This app never stores your passwords on your computer.** Here's how it works in plain English:
+
+### Where are my passwords stored?
+Your passwords live on Bitwarden's secure servers — the same place they've always been. This app simply connects to your Bitwarden account to fetch them when you need to log in somewhere.
+
+### What happens when I use autofill?
+1. You press the hotkey (Ctrl+Alt+P)
+2. The app asks Bitwarden: "What password goes with this website/app?"
+3. Bitwarden sends back the password (encrypted, of course)
+4. The app types it into the login form for you
+5. **The password is immediately erased from the app's memory**
+
+### What about my master password?
+Your master password is used only to unlock your vault. It's never saved anywhere — not on your computer, not sent to any server. After unlocking, it's wiped from memory.
+
+### Does this app save anything?
+- **Passwords**: Never saved to disk
+- **Login credentials (API key)**: Optionally saved in Windows Credential Manager (the same secure place Windows stores your Wi-Fi passwords)
+- **Your vault**: Kept in memory only while the app is running. When you close it or lock it, everything is erased.
+
+### Why doesn't it use copy-paste?
+Many password managers copy your password to the clipboard. The problem? Other apps can read your clipboard, and Windows keeps a clipboard history. This app types your password directly into the login form — no clipboard involved.
+
+### Is this safer than the browser extension?
+It's a different approach with the same security goal. This app is designed for **desktop applications** (like Steam, Discord, Slack) where browser extensions can't help you.
+
+---
+
+## Security (Technical Details)
 
 - **Memory Safety**: Built in Rust with `secrecy` and `zeroize` crates
 - **No Disk Storage**: Vault data and encryption keys exist only in RAM
